@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('jabatan');
             $table->string('alamat');
             $table->string('no_telp');
-            $table->string('nip')->unique();
+            $table->string('nip');
             $table->timestamps();
         });
     }

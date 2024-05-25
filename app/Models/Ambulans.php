@@ -9,13 +9,12 @@ class Ambulans extends Model
 {
     use HasFactory;
 
-    protected $table = 'ambulans';
+    protected $table = 'ambulan';
     protected $fillable = [
         'id',
         'petugas_id',
         'rumah_sakit_id',
         'lokasi',
-        'tipe',
         'plat_nomor',
         'status',
     ];

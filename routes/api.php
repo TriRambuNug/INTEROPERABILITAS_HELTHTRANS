@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AmbulansController;
 use App\Http\Controllers\PertolonganPertamaController;
 use App\Http\Controllers\PasienController;
+use App\Http\Controllers\PetugasController;
 use App\Http\Controllers\RumahSakitController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,3 +27,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('pertolongan-pertama', PertolonganPertamaController::class);
 Route::apiresource('pasien', PasienController::class);
 Route::apiResource('rumah-sakit', RumahSakitController::class);
+Route::apiResource('ambulans', AmbulansController::class);
+Route::apiResource('petugas', PetugasController::class);
