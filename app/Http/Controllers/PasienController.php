@@ -129,13 +129,13 @@ class PasienController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pasien $pasien)
+    public function destroy($id)
     {
         try {
-            $pasien->delete();
+            $id->delete();
             return response()->json([
                 'message' => 'Data berhasil dihapus',
-                'data' => $pasien,
+                'data' => $id,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

@@ -12,7 +12,19 @@ class DokumentasiController extends Controller
      */
     public function index()
     {
-        //
+        try{
+            $dokumentasi = Dokumentasi::with('pasien', 'petugas', 'rumah_sakit')->get();
+            return response()->json([
+                'status' => 'success',
+                'data' => $dokumentasi
+            ], 200);
+        }
+        catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -28,15 +40,55 @@ class DokumentasiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'pasien_id' => 'required',
+            'petugas_id' => 'required',
+            'diagnosa' => 'required',
+            'tindakan' => 'required',
+            'tanggal' => 'required',
+        ]);
+
+        try{
+            $dokumentasi = new Dokumentasi;
+            $dokumentasi->pasien_id = $request->pasien_id;
+            $dokumentasi->petugas_id = $request->petugas_id;
+            $dokumentasi->diagnosa = $request->diagnosa;
+            $dokumentasi->tindakan = $request->tindakan;
+            $dokumentasi->tanggal = $request->tanggal;
+            $dokumentasi->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data berhasil disimpan',
+                'data' => $dokumentasi
+            ], 200);
+        }
+        catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Dokumentasi $dokumentasi)
+    public function show($id)
     {
-        //
+        try{
+            $dokumentasi = Dokumentasi::with('pasien', 'petugas', 'rumah_sakit')->find($id);
+            return response()->json([
+                'status' => 'success',
+                'data' => $dokumentasi
+            ], 200);
+        }
+        catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -50,16 +102,51 @@ class DokumentasiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Dokumentasi $dokumentasi)
+    public function update(Request $request, $id)
     {
-        //
+        try{
+            $dokumentasi = Dokumentasi::find($id);
+            $dokumentasi->pasien_id = $request->pasien_id;
+            $dokumentasi->petugas_id = $request->petugas_id;
+            $dokumentasi->diagnosa = $request->diagnosa;
+            $dokumentasi->tindakan = $request->tindakan;
+            $dokumentasi->tanggal = $request->tanggal;
+            $dokumentasi->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data berhasil diupdate',
+                'data' => $dokumentasi
+            ], 200);
+        }
+        catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Dokumentasi $dokumentasi)
+    public function destroy($id)
     {
-        //
+        try{
+            $dokumentasi = Dokumentasi::find($id);
+            $dokumentasi->delete();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data berhasil dihapus',
+                'data' => $dokumentasi
+            ], 200);
+        }
+        catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 }
