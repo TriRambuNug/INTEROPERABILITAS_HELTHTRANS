@@ -16,14 +16,14 @@ class Ambulans extends JsonResource
     {
         return [
             'id' => $this->id,
-            'petugas_id' => $this->petugas_id,
-            'instansi' => $this->instansi,
+            // 'petugas_id' => $this->petugas_id,
+            // 'instansi' => $this->instansi,
             'lokasi' => $this->lokasi,
             'tipe' => $this->tipe,
             'plat_nomor' => $this->plat_nomor,
             'status' => $this->status,
-            'petugas' => new Petugas($this->petugas),
-            'rumah_sakit' => new RumahSakit($this->rumahSakit),
+            'petugas' => $this->petugas,
+            'rumah_sakit' => $this->rumahSakit,
         ];
     }
 }

@@ -16,13 +16,13 @@ class Dokumentasi extends JsonResource
     {
         return [
             'id' => $this->id,
-            'pasien_id' => $this->pasien_id,
-            'petugas_id' => $this->petugas_id,
+            // 'pasien_id' => $this->pasien_id,
+            // 'petugas_id' => $this->petugas_id,
             'diagnosa' => $this->diagnosa,
             'tindakan' => $this->tindakan,
             'tanggal' => $this->tanggal,
-            'pasien' => new Pasien($this->pasien),
-            'petugas' => new Petugas($this->petugas),
+            'pasien' => $this->pasien,
+            'petugas' => $this->petugas,
         ];
     }
 }

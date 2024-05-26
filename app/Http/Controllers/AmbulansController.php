@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Ambulans as ResourcesAmbulans;
 use App\Models\Ambulans;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -14,10 +15,10 @@ class AmbulansController extends Controller
     public function index()
     {
         try {
-            $ambulans = Ambulans::with('rumah_sakit', 'petugas')->get();
+            $ambulans = Ambulans::all();
             return response()->json([
                 'status' => 'success',
-                'data' => $ambulans
+                'data' => ResourcesAmbulans::collection($ambulans)
             ], 200);
         }
         catch (\Exception $e) {
@@ -45,6 +46,7 @@ class AmbulansController extends Controller
         $this->validate($request, [
             'petugas_id' => 'required',
             'rumah_sakit_id' => 'required',
+            'tipe' => 'required',
             'lokasi' => 'required',
             'plat_nomor' => 'required',
             'status' => 'required',
@@ -53,6 +55,7 @@ class AmbulansController extends Controller
             $ambulans = new Ambulans;
             $ambulans->petugas_id = $request->petugas_id;
             $ambulans->rumah_sakit_id = $request->rumah_sakit_id;
+            $ambulans->tipe = $request->tipe;
             $ambulans->lokasi = $request->lokasi;
             $ambulans->plat_nomor = $request->plat_nomor;
             $ambulans->status = $request->status;
@@ -70,7 +73,7 @@ class AmbulansController extends Controller
             ], 500);
         }
 
-       
+
     }
 
     /**
@@ -79,7 +82,7 @@ class AmbulansController extends Controller
     public function show($id)
     {
         try{
-            $ambulans = Ambulans::with('rumah_sakit', 'petugas')->find($id);
+            $ambulans = Ambulans::find($id);
             if(!$ambulans){
                 return response()->json([
                     'status' => 'error',
@@ -88,7 +91,7 @@ class AmbulansController extends Controller
             }
             return response()->json([
                 'status' => 'success',
-                'data' => $ambulans
+                'data' => new ResourcesAmbulans($ambulans)
             ], 200);
         }
         catch (\Exception $e) {
@@ -115,6 +118,7 @@ class AmbulansController extends Controller
         $this->validate($request, [
             'petugas_id' => 'required',
             'rumah_sakit_id' => 'required',
+            'tipe' => 'required',
             'lokasi' => 'required',
             'plat_nomor' => 'required',
             'status' => 'required',
@@ -129,6 +133,7 @@ class AmbulansController extends Controller
             }
             $ambulans->petugas_id = $request->petugas_id;
             $ambulans->rumah_sakit_id = $request->rumah_sakit_id;
+            $ambulans->tipe = $request->tipe;
             $ambulans->lokasi = $request->lokasi;
             $ambulans->plat_nomor = $request->plat_nomor;
             $ambulans->status = $request->status;
@@ -136,7 +141,7 @@ class AmbulansController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'data' => $ambulans
+                'data' => new ResourcesAmbulans($ambulans)
             ], 200);
         }
         catch (\Exception $e) {
@@ -146,7 +151,7 @@ class AmbulansController extends Controller
             ], 500);
         }
     }
-    
+
 
     /**
      * Remove the specified resource from storage.
@@ -174,5 +179,5 @@ class AmbulansController extends Controller
             ], 500);
         }
     }
-   
+
 }

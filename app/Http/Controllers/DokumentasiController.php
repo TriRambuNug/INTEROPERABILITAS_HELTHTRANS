@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\Dokumentasi as ResourcesDokumentasi;
 use App\Models\Dokumentasi;
 use Illuminate\Http\Request;
 
@@ -13,10 +14,10 @@ class DokumentasiController extends Controller
     public function index()
     {
         try{
-            $dokumentasi = Dokumentasi::with('pasien', 'petugas', 'rumah_sakit')->get();
+            $dokumentasi = Dokumentasi::all();
             return response()->json([
                 'status' => 'success',
-                'data' => $dokumentasi
+                'data' => ResourcesDokumentasi::collection($dokumentasi)
             ], 200);
         }
         catch (\Exception $e) {
@@ -60,7 +61,7 @@ class DokumentasiController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Data berhasil disimpan',
-                'data' => $dokumentasi
+                'data' => new ResourcesDokumentasi($dokumentasi)
             ], 200);
         }
         catch (\Exception $e) {
@@ -77,10 +78,10 @@ class DokumentasiController extends Controller
     public function show($id)
     {
         try{
-            $dokumentasi = Dokumentasi::with('pasien', 'petugas', 'rumah_sakit')->find($id);
+            $dokumentasi = Dokumentasi::find($id);
             return response()->json([
                 'status' => 'success',
-                'data' => $dokumentasi
+                'data' => new ResourcesDokumentasi($dokumentasi)
             ], 200);
         }
         catch (\Exception $e) {
@@ -116,7 +117,7 @@ class DokumentasiController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Data berhasil diupdate',
-                'data' => $dokumentasi
+                'data' => new ResourcesDokumentasi($dokumentasi)
             ], 200);
         }
         catch (\Exception $e) {
@@ -124,7 +125,7 @@ class DokumentasiController extends Controller
                 'status' => 'error',
                 'message' => $e->getMessage()
             ], 500);
-        
+
         }
     }
 
@@ -139,7 +140,7 @@ class DokumentasiController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Data berhasil dihapus',
-                'data' => $dokumentasi
+                'data' => new ResourcesDokumentasi($dokumentasi)
             ], 200);
         }
         catch (\Exception $e) {

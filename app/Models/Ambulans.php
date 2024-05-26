@@ -14,6 +14,7 @@ class Ambulans extends Model
         'id',
         'petugas_id',
         'rumah_sakit_id',
+        'tipe',
         'lokasi',
         'plat_nomor',
         'status',

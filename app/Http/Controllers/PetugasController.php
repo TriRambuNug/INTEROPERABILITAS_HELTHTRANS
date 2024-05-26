@@ -82,6 +82,12 @@ class PetugasController extends Controller
     {
         try {
             $petugas = Petugas::find($id);
+            if (!$petugas) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Data Petugas dengan ID ' . $id . ' Tidak Ditemukan',
+                ], 404);
+            }
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Data Petugas',
