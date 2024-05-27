@@ -17,13 +17,14 @@ class PasienController extends Controller
         try {
             $pasien = Pasien::all();
             return response()->json([
+                'status' => 'success',
                 'message' => 'Berhasil menampilkan data',
                 'data' => $pasien,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Gagal menampilkan data',
-                'data' => $e->getMessage(),
+                'status' => 'error',
+                'message' => $e->getMessage(),
             ], 400);
         }
         return Pasien::all();
@@ -55,15 +56,16 @@ class PasienController extends Controller
         try{
             $pasien = Pasien::create($validateData);
             return response()->json([
+                'status' => 'success',
                 'message' => 'Data berhasil disimpan',
                 'data' => $pasien,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Data gagal disimpan',
-                'data' => $e->getMessage(),
+                'status' => 'error',
+                'message' => $e->getMessage()
             ], 400);
-        
+
         }
 
     }
@@ -76,13 +78,14 @@ class PasienController extends Controller
         try {
             $pasien = Pasien::findorFail($id);
             return response()->json([
+                'status' => 'success',
                 'message' => 'Berhasil menampilkan data',
                 'data' => $pasien,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Gagal menampilkan data',
-                'data' => $e->getMessage(),
+                'status' => 'error',
+                'message' => $e->getMessage()
             ], 400);
         }
     }
@@ -114,18 +117,19 @@ class PasienController extends Controller
        try {
            $pasien->update($validateData);
            return response()->json([
-               'message' => 'Data berhasil diubah',
-               'data' => $pasien,
+                'status' => 'success',
+                'message' => 'Data berhasil diubah',
+                'data' => $pasien,
            ], 200);
        } catch (\Exception $e) {
            return response()->json([
-               'message' => 'Data gagal diubah',
-               'data' => $e->getMessage(),
+                'status' => 'error',
+                'message' => $e->getMessage()
            ], 400);
        }
     }
         //
-    
+
     /**
      * Remove the specified resource from storage.
      */
@@ -134,13 +138,13 @@ class PasienController extends Controller
         try {
             $id->delete();
             return response()->json([
+                'status' => 'success',
                 'message' => 'Data berhasil dihapus',
-                'data' => $id,
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Data gagal dihapus',
-                'data' => $e->getMessage(),
+                'status' => 'error',
+                'message' => $e->getMessage()
             ], 400);
         }
     }

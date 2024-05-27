@@ -15,16 +15,15 @@ class PetugasController extends Controller
         try {
             $petugas = Petugas::all();
             return response()->json([
-                'success' => true,
+                'status' => 'success',
                 'message' => 'List Data Petugas',
                 'data'    => $petugas
             ], 200);
         }
         catch(\Exception $e) {
             return response()->json([
-                'success' => false,
+                'status' => 'error',
                 'message' => 'Gagal Mengambil Data Petugas',
-                'data'    => ''
             ], 400);
         }
     }
@@ -61,16 +60,15 @@ class PetugasController extends Controller
             $petugas->save();
 
             return response()->json([
-                'success' => true,
+                'status' => 'success',
                 'message' => 'Data Petugas Berhasil Disimpan',
                 'data'    => $petugas
             ], 200);
         }
         catch(\Exception $e){
             return response()->json([
-                'success' => false,
+                'status' => 'error',
                 'message' => 'Data Petugas Gagal Disimpan',
-                'data'    => ''
             ], 400);
         }
     }
@@ -84,21 +82,20 @@ class PetugasController extends Controller
             $petugas = Petugas::find($id);
             if (!$petugas) {
                 return response()->json([
-                    'success' => false,
+                    'status' => 'error',
                     'message' => 'Data Petugas dengan ID ' . $id . ' Tidak Ditemukan',
                 ], 404);
             }
             return response()->json([
-                'success' => true,
+                'status' => 'success',
                 'message' => 'Detail Data Petugas',
                 'data'    => $petugas
             ], 200);
         }
         catch (\Exception $e) {
             return response()->json([
-                'success' => false,
+                'status' => 'error',
                 'message' => 'Data Petugas Tidak Ditemukan',
-                'data'    => ''
             ], 404);
         }
     }

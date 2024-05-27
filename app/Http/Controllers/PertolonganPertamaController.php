@@ -12,7 +12,20 @@ class PertolonganPertamaController extends Controller
      */
     public function index()
     {
-        return PertolonganPertama::all();
+        try {
+            $pertolonganPertama = PertolonganPertama::all();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Berhasil menampilkan data',
+                'data' => $pertolonganPertama
+            ], 200);
+        }
+        catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
@@ -20,7 +33,7 @@ class PertolonganPertamaController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -38,6 +51,7 @@ class PertolonganPertamaController extends Controller
         $pertolonganPertama = PertolonganPertama::create($validatedData);
 
         return response()->json([
+            'status' => 'success',
             'message' => 'Data berhasil disimpan',
             'data' => $pertolonganPertama,
         ], 201);
@@ -51,10 +65,13 @@ class PertolonganPertamaController extends Controller
         $pertolonganPertama = PertolonganPertama::findOrFail($id);
         if (!$pertolonganPertama) {
             return response()->json([
+                'status' => 'error',
                 'message' => 'Data tidak ditemukan',
             ], 404);
         }
         return response()->json([
+            'status' => 'success',
+            'message' => 'Data berhasil ditemukan',
             'data' => $pertolonganPertama,
         ], 200);
     }
@@ -82,7 +99,14 @@ class PertolonganPertamaController extends Controller
 
         $pertolonganPertama->update($validatedData);
 
+        if (!$pertolonganPertama) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
         return response()->json([
+            'status' => 'success',
             'message' => 'Data berhasil diupdate',
             'data' => $pertolonganPertama,
         ], 200);
@@ -93,8 +117,18 @@ class PertolonganPertamaController extends Controller
      */
     public function destroy($id)
     {
-        PertolonganPertama::destroy($id);
-        return response()->json(null, 204);
+        $pertolonganPertama = PertolonganPertama::findOrFail($id);
+        if (!$pertolonganPertama) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
+        $pertolonganPertama->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data berhasil dihapus',
+        ], 200);
     }
 
 }

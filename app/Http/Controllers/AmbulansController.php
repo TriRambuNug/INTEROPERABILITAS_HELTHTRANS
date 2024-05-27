@@ -63,7 +63,7 @@ class AmbulansController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'data' => $ambulans
+                'data' => new ResourcesAmbulans($ambulans)
             ], 200);
         }
         catch (\Exception $e) {

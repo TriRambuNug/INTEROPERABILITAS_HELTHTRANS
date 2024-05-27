@@ -15,16 +15,15 @@ class RumahSakitController extends Controller
         try{
             $rumahSakit = RumahSakit::all();
             return response()->json([
-                'success' => true,
+                'status' => 'success',
                 'message' => 'List Data Rumah Sakit',
                 'data'    => $rumahSakit
             ], 200);
         }
         catch(\Exception $e){
             return response()->json([
-                'success' => false,
-                'message' => 'Gagal Mengambil Data Rumah Sakit',
-                'data'    => ''
+                'status' => 'error',
+                'message' => $e->getMessage()
             ], 400);
         }
     }
@@ -58,16 +57,14 @@ class RumahSakitController extends Controller
         $rumahSakit->save();
 
         return response()->json([
-            'success' => true,
+            'status' => 'success',
             'message' => 'Data Rumah Sakit Berhasil Disimpan',
             'data'    => $rumahSakit
         ], 200);
     } catch(\Exception $e) {
         return response()->json([
-            'success' => false,
-            'message' => 'Data Rumah Sakit Gagal Disimpan',
-            'data'    => '',
-            'error'   => $e->getMessage()
+            'status' => 'error',
+            'message' => $e->getMessage()
         ], 400);
     }
 }
@@ -80,22 +77,21 @@ class RumahSakitController extends Controller
         try{
             $rumahSakit = RumahSakit::find($id);
             return response()->json([
-                'success' => true,
+                'status' => 'success',
                 'message' => 'Detail Data Rumah Sakit',
                 'data'    => $rumahSakit
             ], 200);
         }
         catch(\Exception $e){
             return response()->json([
-                'success' => false,
-                'message' => 'Data Rumah Sakit Tidak Ditemukan',
-                'data'    => ''
+                'status' => 'error',
+                'message' => $e->getMessage()
             ], 400);
         }
     }
-    
 
-    
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -118,19 +114,25 @@ class RumahSakitController extends Controller
             $rumahSakit->email = $request->email;
             $rumahSakit->save();
 
+            if (!$rumahSakit) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Data Rumah Sakit Tidak Ditemukan',
+                ], 404);
+            }
+
             return response()->json([
-                'success' => true,
+                'status' => 'success',
                 'message' => 'Data Rumah Sakit Berhasil Diupdate',
                 'data'    => $rumahSakit
             ], 200);
         }
         catch(\Exception $e){
             return response()->json([
-                'success' => false,
-                'message' => 'Data Rumah Sakit Gagal Diupdate',
-                'data'    => ''
+                'status' => 'error',
+                'message' => $e->getMessage()
             ], 400);
-        
+
         }
     }
 
@@ -142,16 +144,14 @@ class RumahSakitController extends Controller
         try{
             $rumahSakit->delete();
             return response()->json([
-                'success' => true,
+                'status' => 'success',
                 'message' => 'Data Rumah Sakit Berhasil Dihapus',
-                'data'    => $rumahSakit
             ], 200);
         }
         catch(\Exception $e){
             return response()->json([
-                'success' => false,
-                'message' => 'Data Rumah Sakit Gagal Dihapus',
-                'data'    => ''
+                'status' => 'error',
+                'message' => $e->getMessage()
             ], 400);
         }
     }
