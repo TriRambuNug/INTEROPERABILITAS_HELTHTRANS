@@ -23,13 +23,27 @@ class LoginController extends Controller
         //         'data' => auth()->user()
         //     ], 200);
         // }
+        $role = 'user';
         if ($email == 'admin@hanif.com' && $password == 'admin') {
+            $role = 'admin';
+        }
+        if ($role == 'admin') {
             return response()->json([
                 'status' => 'success',
                 'message' => 'Login Berhasil',
                 'data' => [
                     'name' => 'Hanif Syauqi',
                     'role' => 'admin'
+                ]
+            ], 200);
+        }
+        else {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Login Berhasil',
+                'data' => [
+                    'name' => 'Hanif Syauqi',
+                    'role' => 'user'
                 ]
             ], 200);
         }
