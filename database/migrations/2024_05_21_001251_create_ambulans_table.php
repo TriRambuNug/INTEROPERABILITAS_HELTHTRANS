@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('petugas_id')->constrained('petugas');
             $table->foreignId('rumah_sakit_id')->constrained('rumah_sakit');
             $table->string('lokasi');
+            $table->string('tipe');
             $table->string('plat_nomor');
             $table->string('status');
             $table->timestamps();
