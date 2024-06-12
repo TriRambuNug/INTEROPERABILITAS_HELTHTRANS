@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AmbulansController;
 use App\Http\Controllers\DokumentasiController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PertolonganPertamaController;
 use App\Http\Controllers\PasienController;
 use App\Http\Controllers\PetugasController;
@@ -31,3 +32,5 @@ Route::apiResource('rumah-sakit', RumahSakitController::class);
 Route::apiResource('ambulans', AmbulansController::class);
 Route::apiResource('petugas', PetugasController::class);
 Route::apiResource('dokumentasi', DokumentasiController::class);
+
+Route::post('login', [LoginController::class, 'login']);
