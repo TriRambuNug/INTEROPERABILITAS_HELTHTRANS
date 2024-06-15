@@ -33,4 +33,6 @@ Route::apiResource('ambulans', AmbulansController::class);
 Route::apiResource('petugas', PetugasController::class);
 Route::apiResource('dokumentasi', DokumentasiController::class);
 
+Route::post('pertolongan-pertama/{id}', [PertolonganPertamaController::class, 'update']);
+
 Route::post('login', [LoginController::class, 'login']);

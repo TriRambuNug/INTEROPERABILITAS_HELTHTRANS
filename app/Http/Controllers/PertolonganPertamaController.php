@@ -45,10 +45,23 @@ class PertolonganPertamaController extends Controller
         $validatedData = $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'gambar' => 'nullable|string',
+            'gambar' => 'required',
         ]);
 
-        $pertolonganPertama = PertolonganPertama::create($validatedData);
+        if ($request->hasFile('gambar')) {
+            $img = $request->file('gambar');
+            if (is_array($img)) {
+                $img = $img[0];
+            }
+            $imgName = time() . '.' . $img->getClientOriginalName();
+            $imgPath = '/storage/' . $img->storeAs('images', $imgName, 'public');
+        }
+
+        $pertolonganPertama = PertolonganPertama::create([
+            'judul' => $validatedData['judul'],
+            'deskripsi' => $validatedData['deskripsi'],
+            'gambar' => $imgPath,
+        ]);
 
         return response()->json([
             'status' => 'success',
@@ -92,12 +105,29 @@ class PertolonganPertamaController extends Controller
         $pertolonganPertama = PertolonganPertama::findOrFail($id);
 
         $validatedData = $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
-            'gambar' => 'nullable|string',
+            'judul' => 'sometimes',
+            'deskripsi' => 'sometimes',
+            'gambar' => 'sometimes',
         ]);
 
-        $pertolonganPertama->update($validatedData);
+        $p3k = PertolonganPertama::find($id);
+
+        if ($request->hasFile('gambar')) {
+            $img = $request->file('gambar');
+            if (is_array($img)) {
+                $img = $img[0];
+            }
+            $imgName = time() . '.' . $img->getClientOriginalName();
+            $imgPath = '/storage/' . $img->storeAs('images', $imgName, 'public');
+        } else {
+            $imgPath = $p3k->gambar;
+        }
+
+        $pertolonganPertama->update([
+            'judul' => $validatedData['judul'] ?? $pertolonganPertama->judul,
+            'deskripsi' => $validatedData['deskripsi'] ?? $pertolonganPertama->deskripsi,
+            'gambar' => $imgPath,
+        ]);
 
         if (!$pertolonganPertama) {
             return response()->json([
