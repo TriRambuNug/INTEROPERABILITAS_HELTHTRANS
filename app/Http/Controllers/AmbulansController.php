@@ -46,7 +46,7 @@ class AmbulansController extends Controller
         $this->validate($request, [
             'petugas_id' => 'required',
             'rumah_sakit_id' => 'required',
-            'tipe' => 'required',
+            // 'tipe' => 'required',
             'lokasi' => 'required',
             'plat_nomor' => 'required',
             'status' => 'required',
@@ -55,7 +55,7 @@ class AmbulansController extends Controller
             $ambulans = new Ambulans;
             $ambulans->petugas_id = $request->petugas_id;
             $ambulans->rumah_sakit_id = $request->rumah_sakit_id;
-            $ambulans->tipe = $request->tipe;
+            // $ambulans->tipe = $request->tipe;
             $ambulans->lokasi = $request->lokasi;
             $ambulans->plat_nomor = $request->plat_nomor;
             $ambulans->status = $request->status;
@@ -118,7 +118,7 @@ class AmbulansController extends Controller
         $this->validate($request, [
             'petugas_id' => 'required',
             'rumah_sakit_id' => 'required',
-            'tipe' => 'required',
+            // 'tipe' => 'required',
             'lokasi' => 'required',
             'plat_nomor' => 'required',
             'status' => 'required',
@@ -133,7 +133,7 @@ class AmbulansController extends Controller
             }
             $ambulans->petugas_id = $request->petugas_id;
             $ambulans->rumah_sakit_id = $request->rumah_sakit_id;
-            $ambulans->tipe = $request->tipe;
+            // $ambulans->tipe = $request->tipe;
             $ambulans->lokasi = $request->lokasi;
             $ambulans->plat_nomor = $request->plat_nomor;
             $ambulans->status = $request->status;
